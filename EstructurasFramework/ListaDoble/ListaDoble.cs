@@ -36,7 +36,8 @@ namespace Estructuras.ListaDoble
             if (Raiz != null)
                 Raiz.Anterior = tmp;
             Raiz = tmp;
-            enumerador.Siguiente = Raiz;
+            if(enumerador!=null)
+                enumerador.Siguiente = Raiz;
         }
 
         public void insertarUltimo(object dato)
@@ -73,7 +74,8 @@ namespace Estructuras.ListaDoble
                     tmp.Anterior.Siguiente = null;
                 }
                 tmp = null; //Elimina el nodo
-                enumerador.Siguiente = Raiz;
+                if(enumerador!=null)
+                    enumerador.Siguiente = Raiz;
             }
         }
 
@@ -91,7 +93,10 @@ namespace Estructuras.ListaDoble
 
         //IEnumerable
         public void Reset()
-        { enumerador.Siguiente = Raiz; }
+        {
+            enumerador = new Nodo(null);
+            enumerador.Siguiente = Raiz;
+        }
 
         //IEnumerable
         public object Current

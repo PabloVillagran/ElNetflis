@@ -11,22 +11,10 @@ namespace ElNetflis.Clases
         public String Descripcion { get; set; }
         public String PosterUrl { get; set; }
 
-        public String ToJson()
-        {
-            return "{" +
-                "Genero:"+ Genero +
-                ",Nombre:"+ Nombre +
-                ",Director:"+ Director +
-                ",Year:"+ Year +
-                ",Descripcion:"+ Descripcion +
-                ",PosterUrl:"+ PosterUrl +
-                "}";
-        }
-
         internal static Pelicula Parse(string line)
         {
             Pelicula tmp = new Pelicula();
-            String[] datos = line.Split(',');
+            String[] datos = line.Split('|');
             tmp.Genero = datos[0].Replace("Genero:", "");
             tmp.Nombre = datos[1].Replace("Nombre:", "");
             tmp.Director = datos[2].Replace("Director:", "");
@@ -39,11 +27,11 @@ namespace ElNetflis.Clases
         public override string ToString()
         {
             return "Genero:" + Genero +
-                ",Nombre:" + Nombre +
-                ",Director:" + Director +
-                ",Year:" + Year +
-                ",Descripcion:" + Descripcion +
-                ",PosterUrl:" + PosterUrl;
+                "|Nombre:" + Nombre +
+                "|Director:" + Director +
+                "|Year:" + Year +
+                "|Descripcion:" + Descripcion +
+                "|PosterUrl:" + PosterUrl;
         }
     }
 }
