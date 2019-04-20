@@ -80,11 +80,35 @@ namespace ElNetflis.frontEnds
             tbYear.Text="";
             tbPosterUrl.Text="";
             ddGenero.SelectedValue="Drama";
+            ddPelicula.Items.Clear();
+            ddCategoria.SelectedValue = "";
         }
 
         protected void bEliminar_Click(object sender, EventArgs e)
         {
-
+            String selectedPelicula = ddPelicula.SelectedValue;
+            if (selectedPelicula != "")
+            {
+                ListaDoble tmp = null;
+                switch (ddCategoria.SelectedValue)
+                {
+                    case "Children":
+                        tmp = PeliculasNinos;
+                        break;
+                    case "Drama":
+                        tmp = PeliculasDrama;
+                        break;
+                    case "AccAventura":
+                        tmp = PeliculasAccion;
+                        break;
+                }
+                if (tmp.Contains(selectedPelicula))
+                {
+                    tmp.eliminar(Pelicula.Parse(selectedPelicula));
+                    Utils.EliminarPelicula(ArchivoPeliculas, selectedPelicula);
+                    Clear();
+                }
+            }
         }
 
         protected void ddCategoria_SelectedIndexChanged(object sender, EventArgs e)
@@ -104,9 +128,14 @@ namespace ElNetflis.frontEnds
             }
             if (tmp != null)
             {
+                ddPelicula.Items.Clear();
+                ddPelicula.Items.Add("");
                 foreach(Pelicula pelicula in tmp)
                 {
-                    Console.WriteLine(pelicula);
+                    ListItem item = new ListItem();
+                    item.Text = pelicula.Nombre;
+                    item.Value = pelicula.ToString();
+                    ddPelicula.Items.Add(item);
                 }
             }
         }

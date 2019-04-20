@@ -31,7 +31,7 @@ namespace ElNetflis.Clases
             tmp.Nombre = datos[1].Replace("Nombre:", "");
             tmp.Director = datos[2].Replace("Director:", "");
             tmp.Year = Int32.Parse(datos[3].Replace("Year:",""));
-            tmp.Descripcion = datos[4].Replace("Descripcion","");
+            tmp.Descripcion = datos[4].Replace("Descripcion:","");
             tmp.PosterUrl = datos[5].Replace("PosterUrl:","");
             return tmp;
         }

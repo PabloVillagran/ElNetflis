@@ -86,7 +86,7 @@ namespace Estructuras.ListaDoble
         public bool MoveNext()
         {
             enumerador = enumerador.Siguiente;
-            return enumerador.Siguiente != null;
+            return enumerador != null;
         }
 
         //IEnumerable

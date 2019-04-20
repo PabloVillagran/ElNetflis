@@ -1,3 +1,0 @@
-Genero:Drama,Nombre:Pelicula de Drama,Director:PVillagran,Year:2019,Descripcion:Descripción película de Drama,PosterUrl:http://google.com
-Genero:AccAventura,Nombre:Pelicula de Acción,Director:PVillagran,Year:2019,Descripcion:Descripción Acción Aventura,PosterUrl:http://google.com
-Genero:Children,Nombre:Película de niños,Director:PVillagran,Year:2019,Descripcion:Descripción película de niños,PosterUrl:http://google.com
