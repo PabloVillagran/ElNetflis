@@ -49,7 +49,7 @@
             Eliminar película
             <div class="form-group">
                 <label for="ddCategoria">Categoría</label>
-                <asp:DropDownList ID="ddCategoria" runat="server" CssClass="form-control">
+                <asp:DropDownList AutoPostBack="true" ID="ddCategoria" runat="server" CssClass="form-control" OnSelectedIndexChanged="ddCategoria_SelectedIndexChanged">
                     <asp:ListItem Value=""></asp:ListItem>
                     <asp:ListItem Value="Children">Niños</asp:ListItem>
                     <asp:ListItem>Drama</asp:ListItem>
@@ -58,10 +58,10 @@
             </div>
                 <div class="form-group">
                     <label for="ddPelicula">Película</label>
-                    <asp:DropDownList ID="ddPelicula" runat="server">
+                    <asp:DropDownList ID="ddPelicula" runat="server" CssClass="form-control">
                     </asp:DropDownList>
                 </div>
-                <asp:Button ID="bEliminar" runat="server" CssClass="btn btn-primary" Text="Eliminar" />
+                <asp:Button ID="bEliminar" runat="server" CssClass="btn btn-primary" Text="Eliminar" OnClick="bEliminar_Click" />
         </div>
     </form>
 </body>

@@ -1,27 +1,46 @@
 ﻿
+using System;
+using System.Collections;
+
 namespace Estructuras.ListaDoble
 {
-    public class ListaDoble
+    public class ListaDoble : IEnumerator, IEnumerable
     {
         public Nodo Raiz { get; private set; }
+        private Nodo enumerador = new Nodo(null);
 
         public ListaDoble()
         {
             Raiz = null;
+            enumerador.Siguiente = Raiz;
+        }
+
+        public bool Contains(object dato)
+        {
+            Nodo tmp = Raiz;
+            while(tmp != null)
+            {
+                if(tmp.Dato.ToString() == dato.ToString())
+                {
+                    return true;
+                }
+                tmp = tmp.Siguiente;
+            }
+            return false;
         }
 
         public void insertarRaiz(object dato)
         {
             Nodo tmp = new Nodo(dato);
             tmp.Siguiente = Raiz;
-            if (Raiz == null)
+            if (Raiz != null)
                 Raiz.Anterior = tmp;
             Raiz = tmp;
+            enumerador.Siguiente = Raiz;
         }
 
         public void insertarUltimo(object dato)
         {
-            Nodo tmp = new Nodo(dato);
             //TODO
         }
         
@@ -54,19 +73,31 @@ namespace Estructuras.ListaDoble
                     tmp.Anterior.Siguiente = null;
                 }
                 tmp = null; //Elimina el nodo
+                enumerador.Siguiente = Raiz;
             }
         }
 
-        public string Print2Json()
+        public IEnumerator GetEnumerator()
         {
-            return null;
+            return (IEnumerator) this;
         }
 
-        public object buscar()
+        //IEnumerator
+        public bool MoveNext()
         {
-            return null;
+            enumerador = enumerador.Siguiente;
+            return enumerador.Siguiente != null;
         }
 
+        //IEnumerable
+        public void Reset()
+        { enumerador.Siguiente = Raiz; }
+
+        //IEnumerable
+        public object Current
+        {
+            get {return enumerador.Dato;}
+        }
     }
 
     public class Nodo
