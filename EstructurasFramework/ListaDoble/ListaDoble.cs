@@ -1,4 +1,5 @@
 ﻿
+using Estructuras.Generico;
 using System;
 using System.Collections;
 
@@ -8,11 +9,13 @@ namespace Estructuras.ListaDoble
     {
         public Nodo Raiz { get; private set; }
         private Nodo enumerador = new Nodo(null);
+        public int Size { get; set;}
 
         public ListaDoble()
         {
             Raiz = null;
             enumerador.Siguiente = Raiz;
+            Size = 0;
         }
 
         public bool Contains(object dato)
@@ -38,6 +41,7 @@ namespace Estructuras.ListaDoble
             Raiz = tmp;
             if(enumerador!=null)
                 enumerador.Siguiente = Raiz;
+            Size++;
         }
 
         public void insertarUltimo(object dato)
@@ -76,6 +80,7 @@ namespace Estructuras.ListaDoble
                 tmp = null; //Elimina el nodo
                 if(enumerador!=null)
                     enumerador.Siguiente = Raiz;
+                Size--;
             }
         }
 
@@ -107,6 +112,22 @@ namespace Estructuras.ListaDoble
         public object Current
         {
             get {return enumerador.Dato;}
+        }
+
+        public string ToCarouselItems()
+        {
+            Nodo tmp = Raiz;
+            string item = "<div class=\"item active\">";
+            if(tmp.Dato is CarouselObject)
+            {
+                item = ((CarouselObject)tmp.Dato).ToCarouselItem();
+            }
+            else
+            {
+                throw new NotImplementedException("El tipo de objeto no es soportado por este método. Se esperaba CarouselObject.");
+            }
+            item += "</div>";
+            return item;
         }
     }
 

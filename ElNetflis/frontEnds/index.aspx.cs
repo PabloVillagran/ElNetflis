@@ -1,4 +1,5 @@
 ﻿using ElNetflis.Clases;
+
 using Estructuras.ListaDoble;
 using System;
 using System.Web;
@@ -28,18 +29,35 @@ namespace ElNetflis.frontEnds
 
         private void LlenarContenido()
         {
-            foreach(Pelicula pelicula in PeliculasDrama)
-            {
+            carAccionIndicators.Text = GetIndicators("AccAventura");
+            
+        }
 
-            }
-            foreach(Pelicula pelicula in PeliculasAccion)
+        private string GetIndicators(string v)
+        {
+            String indicators = "<ol class=\"carousel - indicators\">";
+            ListaDoble tmp = null;
+            switch (v)
             {
-
+                case "AccAventura":
+                    tmp = PeliculasAccion;
+                    break;
+                case "Drama":
+                    tmp = PeliculasDrama;
+                    break;
+                case "Children":
+                    tmp = PeliculasNinos;
+                    break;
+                default:
+                    return null;
             }
-            foreach(Pelicula pelicula in PeliculasNinos)
+            int indicatorsQuantity = (int)Math.Ceiling((double)tmp.Size / 4);
+            for(int i = 0; i < indicatorsQuantity; i++)
             {
-
+                indicators += "<li data-target=\"#carAccion\" data-slide-to=\""+i+"\" "+(i==0?"class=\"active\">":"")+"</li>";
             }
+            indicators += "</ol>";
+            return indicators;
         }
 
         protected void Continuar_Click(object sender, EventArgs e)

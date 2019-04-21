@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Genericos\CarouselObject.cs" />
     <Compile Include="Cola\Cola.cs" />
     <Compile Include="ListaDoble\ListaDoble.cs" />
     <Compile Include="Pila\Pila.cs" />

@@ -1,8 +1,9 @@
 ﻿using System;
+using Estructuras.Generico;
 
 namespace ElNetflis.Clases
 {
-    public class Pelicula
+    public class Pelicula : CarouselObject
     {
         public String Nombre { get; set; }
         public String Director { get; set; }
@@ -32,6 +33,13 @@ namespace ElNetflis.Clases
                 "|Year:" + Year +
                 "|Descripcion:" + Descripcion +
                 "|PosterUrl:" + PosterUrl;
+        }
+
+        public string ToCarouselItem()
+        {
+            return "<div class=\"col - md - 3\"><a href=\"#\" class=\"thumbnail\">"+
+                        "< img src = \""+PosterUrl+"\" alt = \""+Nombre+"\" " +
+                        "style = \"max-height: 222px;max-width: 150px;\" /></ a ></ div > ";
         }
     }
 }
