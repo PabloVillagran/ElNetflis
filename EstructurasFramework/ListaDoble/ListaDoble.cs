@@ -79,6 +79,11 @@ namespace Estructuras.ListaDoble
             }
         }
 
+        public bool IsEmpty()
+        {
+            return Raiz == null;
+        }
+
         public IEnumerator GetEnumerator()
         {
             return (IEnumerator) this;
