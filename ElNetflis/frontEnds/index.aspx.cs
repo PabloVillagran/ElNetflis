@@ -3,6 +3,7 @@
 using Estructuras.ListaDoble;
 using System;
 using System.Web;
+using System.Web.UI.WebControls;
 
 namespace ElNetflis.frontEnds
 {
@@ -30,14 +31,18 @@ namespace ElNetflis.frontEnds
         private void LlenarContenido()
         {
             carAccionIndicators.Text = GetIndicators("AccAventura");
-            
+            carAccionImages.Text = PeliculasAccion.ToCarouselItems();
+            carDramaIndicators.Text = GetIndicators("Drama");
+            carDramaImages.Text = PeliculasDrama.ToCarouselItems();
+            carChildIndicators.Text = GetIndicators("Children");
+            carChildImages.Text = PeliculasNinos.ToCarouselItems();
         }
 
-        private string GetIndicators(string v)
+        private string GetIndicators(string categoria)
         {
-            String indicators = "<ol class=\"carousel - indicators\">";
+            String indicators = "<ol class=\"carousel-indicators\">";
             ListaDoble tmp = null;
-            switch (v)
+            switch (categoria)
             {
                 case "AccAventura":
                     tmp = PeliculasAccion;
@@ -54,10 +59,16 @@ namespace ElNetflis.frontEnds
             int indicatorsQuantity = (int)Math.Ceiling((double)tmp.Size / 4);
             for(int i = 0; i < indicatorsQuantity; i++)
             {
-                indicators += "<li data-target=\"#carAccion\" data-slide-to=\""+i+"\" "+(i==0?"class=\"active\">":"")+"</li>";
+                indicators += "<li data-target=\"#carAccion\" data-slide-to=\""+i+"\" "+(i==0?"class=\"active\"":"")+"></li>";
             }
             indicators += "</ol>";
             return indicators;
+        }
+
+        protected void Link_Click(object sender, CommandEventArgs e)
+        {
+            String s = e.CommandArgument.ToString();
+            Console.WriteLine(s);
         }
 
         protected void Continuar_Click(object sender, EventArgs e)

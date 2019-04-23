@@ -5,6 +5,7 @@ namespace ElNetflis.Clases
 {
     public class Pelicula : CarouselObject
     {
+        public int TmpId { get; set; }
         public String Nombre { get; set; }
         public String Director { get; set; }
         public int Year { get; set; }
@@ -12,7 +13,7 @@ namespace ElNetflis.Clases
         public String Descripcion { get; set; }
         public String PosterUrl { get; set; }
 
-        internal static Pelicula Parse(string line)
+        public static Pelicula Parse(string line)
         {
             Pelicula tmp = new Pelicula();
             String[] datos = line.Split('|');
@@ -22,6 +23,13 @@ namespace ElNetflis.Clases
             tmp.Year = Int32.Parse(datos[3].Replace("Year:",""));
             tmp.Descripcion = datos[4].Replace("Descripcion:","");
             tmp.PosterUrl = datos[5].Replace("PosterUrl:","");
+            return tmp;
+        }
+
+        public static Pelicula Parse(string line, int tmpId)
+        {
+            Pelicula tmp = Parse(line);
+            tmp.TmpId = tmpId;
             return tmp;
         }
 
@@ -37,9 +45,10 @@ namespace ElNetflis.Clases
 
         public string ToCarouselItem()
         {
-            return "<div class=\"col - md - 3\"><a href=\"#\" class=\"thumbnail\">"+
-                        "< img src = \""+PosterUrl+"\" alt = \""+Nombre+"\" " +
-                        "style = \"max-height: 222px;max-width: 150px;\" /></ a ></ div > ";
+            return "<div class=\"col-md-3\">" +
+                "<a href=\"javascript:__doPostBack('ctl04','')\" class=\"thumbnail\">" +
+                        "<img src=\""+PosterUrl+"\" alt=\""+Nombre+"\" title=\""+Nombre+"\" " +
+                        "style=\"max-height: 222px;max-width: 150px;\"/></a></div>";
         }
     }
 }

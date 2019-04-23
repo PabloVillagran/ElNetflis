@@ -117,17 +117,43 @@ namespace Estructuras.ListaDoble
         public string ToCarouselItems()
         {
             Nodo tmp = Raiz;
+            int pos = 1;
+            int limit = 4;
             string item = "<div class=\"item active\">";
-            if(tmp.Dato is CarouselObject)
+            while(tmp != null)
             {
-                item = ((CarouselObject)tmp.Dato).ToCarouselItem();
-            }
-            else
-            {
-                throw new NotImplementedException("El tipo de objeto no es soportado por este método. Se esperaba CarouselObject.");
+                if(tmp.Dato is CarouselObject)
+                {
+                    item += ((CarouselObject)tmp.Dato).ToCarouselItem();
+                    tmp = tmp.Siguiente;
+                    if(pos++ >= limit)
+                    {
+                        item += "</div>";
+                        item += "<div class=\"item\">";
+                        limit += 4;
+                    }
+                }
+                else
+                {
+                    throw new NotImplementedException("El tipo de dato no es soportado por este método. Se esperaba CarouselObject.");
+                }
             }
             item += "</div>";
             return item;
+        }
+
+        public object GetByTmpId(int tmpId)
+        {
+            Nodo tmp = Raiz;
+            while(tmp!=null)
+            {
+                if (tmp.Dato is CarouselObject)
+                {
+                    if (tmpId == ((CarouselObject)tmp.Dato).TmpId)
+                        return tmp.Dato;
+                }
+            }
+            return null;
         }
     }
 

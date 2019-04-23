@@ -9,5 +9,6 @@ namespace Estructuras.Generico
     public interface CarouselObject
     {
         string ToCarouselItem();
+        int TmpId { get; set; }
     }
 }

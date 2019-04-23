@@ -87,16 +87,7 @@
             <div class="col-md-12">
                 <h2>Acción</h2>
                 <div id="carAccion" class="carousel slide">
-
                     <asp:Literal runat="server" ID="carAccionIndicators"/>
-
-                    <!--
-                    <ol class="carousel-indicators">
-                        <li data-target="#carAccion" data-slide-to="0" class="active"></li>
-                        <li data-target="#carAccion" data-slide-to="1"></li>
-                        <li data-target="#carAccion" data-slide-to="2"></li>
-                    </ol> 
-                    -->
 
                     <!-- Carousel items -->
                     <div class="carousel-inner">
@@ -113,61 +104,11 @@
             <div class="col-md-12">
                 <h2>Niños</h2>
                 <div id="carChild" class="carousel slide">
-
-                    <ol class="carousel-indicators">
-                        <li data-target="#carChild" data-slide-to="0" class="active"></li>
-                        <li data-target="#carChild" data-slide-to="1"></li>
-                        <li data-target="#carChild" data-slide-to="2"></li>
-                    </ol>
+                    <asp:Literal runat="server" ID="carChildIndicators"/>
 
                     <!-- Carousel items -->
                     <div class="carousel-inner">
-
-                        <div class="item active">
-                            <div class="row">
-                                <div class="col-md-3"><a href="#" class="thumbnail">
-                                    <img src="http://lorempixel.com/150/222/" alt="Image" style="max-width: 100%;"/></a></div>
-                                <div class="col-md-3"><a href="#" class="thumbnail">
-                                    <img src="http://lorempixel.com/150/222/" alt="Image" style="max-width: 100%;"/></a></div>
-                                <div class="col-md-3"><a href="#" class="thumbnail">
-                                    <img src="http://lorempixel.com/150/222/" alt="Image" style="max-width: 100%;"/></a></div>
-                                <div class="col-md-3"><a href="#" class="thumbnail">
-                                    <img src="http://lorempixel.com/150/222/" alt="Image" style="max-width: 100%;"/></a></div>
-                            </div>
-                            <!--.row-->
-                        </div>
-                        <!--.item-->
-
-                        <div class="item">
-                            <div class="row">
-                                <div class="col-md-3"><a href="#" class="thumbnail">
-                                    <img src="http://lorempixel.com/150/222/" alt="Image" style="max-width: 100%;"/></a></div>
-                                <div class="col-md-3"><a href="#" class="thumbnail">
-                                    <img src="http://lorempixel.com/150/222/" alt="Image" style="max-width: 100%;"/></a></div>
-                                <div class="col-md-3"><a href="#" class="thumbnail">
-                                    <img src="http://lorempixel.com/150/222/" alt="Image" style="max-width: 100%;"/></a></div>
-                                <div class="col-md-3"><a href="#" class="thumbnail">
-                                    <img src="http://lorempixel.com/150/222/" alt="Image" style="max-width: 100%;"/></a></div>
-                            </div>
-                            <!--.row-->
-                        </div>
-                        <!--.item-->
-
-                        <div class="item">
-                            <div class="row">
-                                <div class="col-md-3"><a href="#" class="thumbnail">
-                                    <img src="http://lorempixel.com/150/222/" alt="Image" style="max-width: 100%;"/></a></div>
-                                <div class="col-md-3"><a href="#" class="thumbnail">
-                                    <img src="http://lorempixel.com/150/222/" alt="Image" style="max-width: 100%;"/></a></div>
-                                <div class="col-md-3"><a href="#" class="thumbnail">
-                                    <img src="http://lorempixel.com/150/222/" alt="Image" style="max-width: 100%;"/></a></div>
-                                <div class="col-md-3"><a href="#" class="thumbnail">
-                                    <img src="http://lorempixel.com/150/222/" alt="Image" style="max-width: 100%;"/></a></div>
-                            </div>
-                            <!--.row-->
-                        </div>
-                        <!--.item-->
-
+                        <asp:Literal runat="server" ID="carChildImages"/>
                     </div>
                     <!--.carousel-inner-->
                     <a data-slide="prev" href="#carChild" class="left carousel-control">‹</a>
@@ -175,72 +116,23 @@
                 </div>
                 <!--.Carousel-->
             </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <h2>Drama</h2>
-                    <div id="carDrama" class="carousel slide">
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Drama</h2>
+                <div id="carDrama" class="carousel slide">
+                    <asp:Literal runat="server" ID="carDramaIndicators"/>
 
-                        <ol class="carousel-indicators">
-                            <li data-target="#carDrama" data-slide-to="0" class="active"></li>
-                            <li data-target="#carDrama" data-slide-to="1"></li>
-                            <li data-target="#carDrama" data-slide-to="2"></li>
-                        </ol>
-
-                        <!-- Carousel items -->
-                        <div class="carousel-inner">
-
-                            <div class="item active">
-                                <div class="row">
-                                    <div class="col-md-3"><a href="#" class="thumbnail">
-                                        <img src="http://lorempixel.com/150/222/" alt="Image" style="max-width: 100%;"/></a></div>
-                                    <div class="col-md-3"><a href="#" class="thumbnail">
-                                        <img src="http://lorempixel.com/150/222/" alt="Image" style="max-width: 100%;"/></a></div>
-                                    <div class="col-md-3"><a href="#" class="thumbnail">
-                                        <img src="http://lorempixel.com/150/222/" alt="Image" style="max-width: 100%;"/></a></div>
-                                    <div class="col-md-3"><a href="#" class="thumbnail">
-                                        <img src="http://lorempixel.com/150/222/" alt="Image" style="max-width: 100%;"/></a></div>
-                                </div>
-                                <!--.row-->
-                            </div>
-                            <!--.item-->
-
-                            <div class="item">
-                                <div class="row">
-                                    <div class="col-md-3"><a href="#" class="thumbnail">
-                                        <img src="http://lorempixel.com/150/222/" alt="Image" style="max-width: 100%;"/></a></div>
-                                    <div class="col-md-3"><a href="#" class="thumbnail">
-                                        <img src="http://lorempixel.com/150/222/" alt="Image" style="max-width: 100%;"/></a></div>
-                                    <div class="col-md-3"><a href="#" class="thumbnail">
-                                        <img src="http://lorempixel.com/150/222/" alt="Image" style="max-width: 100%;"/></a></div>
-                                    <div class="col-md-3"><a href="#" class="thumbnail">
-                                        <img src="http://lorempixel.com/150/222/" alt="Image" style="max-width: 100%;"/></a></div>
-                                </div>
-                                <!--.row-->
-                            </div>
-                            <!--.item-->
-
-                            <div class="item">
-                                <div class="row">
-                                    <div class="col-md-3"><a href="#" class="thumbnail">
-                                        <img src="http://lorempixel.com/150/222/" alt="Image" style="max-width: 100%;"/></a></div>
-                                    <div class="col-md-3"><a href="#" class="thumbnail">
-                                        <img src="http://lorempixel.com/150/222/" alt="Image" style="max-width: 100%;"/></a></div>
-                                    <div class="col-md-3"><a href="#" class="thumbnail">
-                                        <img src="http://lorempixel.com/150/222/" alt="Image" style="max-width: 100%;"/></a></div>
-                                    <div class="col-md-3"><a href="#" class="thumbnail">
-                                        <img src="http://lorempixel.com/150/222/" alt="Image" style="max-width: 100%;"/></a></div>
-                                </div>
-                                <!--.row-->
-                            </div>
-                            <!--.item-->
-
-                        </div>
-                        <!--.carousel-inner-->
-                        <a data-slide="prev" href="#carDrama" class="left carousel-control">‹</a>
-                        <a data-slide="next" href="#carDrama" class="right carousel-control">›</a>
+                    <!-- Carousel items -->
+                    <div class="carousel-inner">
+                        <asp:Literal runat="server" ID="carDramaImages"/>
                     </div>
-                    <!--.Carousel-->
+                        
+                    <!--.carousel-inner-->
+                    <a data-slide="prev" href="#carDrama" class="left carousel-control">‹</a>
+                    <a data-slide="next" href="#carDrama" class="right carousel-control">›</a>
                 </div>
+                <!--.Carousel-->
             </div>
         </div>
     </form>

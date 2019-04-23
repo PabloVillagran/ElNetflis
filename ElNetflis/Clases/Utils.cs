@@ -12,10 +12,11 @@ namespace ElNetflis.Clases
             if (System.IO.File.Exists(pathArchivo))
             {
                 string[] lines = System.IO.File.ReadAllLines(pathArchivo);
+                int tmpId = 0;
                 foreach(String line in lines)
                 {
                     if (line.Contains("Genero:" + genero))
-                        peliculas.insertarRaiz(Pelicula.Parse(line));
+                        peliculas.insertarRaiz(Pelicula.Parse(line, tmpId++));
                 }
             }
             return peliculas;
