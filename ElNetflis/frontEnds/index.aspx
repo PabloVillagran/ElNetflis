@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="/Scripts/jquery.unobtrusive-ajax.js"></script> 
     <style>
         .carousel {
             margin-bottom: 0;
@@ -67,9 +68,76 @@
                 border-right: 0;
             }
     </style>
+    <script type="text/javascript">
+        function getPelicula(tempId, genero) {
+            $.ajax({
+                type: "POST",
+                url: "index.aspx/GetPeliculaById",
+                data: JSON.stringify({ "TempId": tempId , "Genero" : genero}),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    $("#modalTitulo").text(response.d.Nombre);
+                    $("#modalNombre").text(response.d.Nombre);
+                    $("#modalDescripcion").text(response.d.Descripcion);
+                    $("#modalImg").attr("src", response.d.PosterUrl);
+                    $("#modalVerPelicula").attr("onclick", "verPelicula(" + tempId + ", '"+genero+"')");
+                    $("#detallesPelicula").modal("toggle");
+                },
+                failure: function (jqXHR, textStatus, errorThrown) {
+                    alert("HTTP Status: " + jqXHR.status + "; Error Text: " + jqXHR.responseText);
+                }
+            });
+        }
+
+        function verPelicula(tempId, genero) {
+            $.ajax({
+                type: "POST",
+                url: "index.aspx/VerPelicula",
+                data: JSON.stringify({ "TempId": tempId, "Genero": genero }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    alert("procesado");
+                },
+                failure: function (jqXHR, textStatus, errorThrown) {
+                    alert("HTTP Status: " + jqXHR.status + "; Error Text: " + jqXHR.responseText);
+                }
+            });
+        }
+    </script>
 </head>
 <body>
     <form runat="server" class="container">
+    <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="True">
+    </asp:ScriptManager>
+
+         <div class="modal fade" id="detallesPelicula" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                        <h4 class="modal-title" id="modalTitulo"></h4>
+                        </div>
+                    <div class="modal-body">
+                        <center>
+                            <img id="modalImg" src="#"/>
+                            <h3 class="media-heading" id="modalNombre"></h3>
+                        </center>
+                        
+                        <h5>Descripción: </h5>
+                        <p id="modalDescripcion"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <center>
+                        <button id="modalVerPelicula" type="button" class="btn btn-default" data-dismiss="modal">Ver película</button>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
         <div class="row">
             <div class="col-sm-6">
                 <h4>Continuar viendo</h4>
@@ -135,6 +203,8 @@
                 <!--.Carousel-->
             </div>
         </div>
+
+       
     </form>
 </body>
 </html>

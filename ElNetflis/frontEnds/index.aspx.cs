@@ -3,6 +3,8 @@
 using Estructuras.ListaDoble;
 using System;
 using System.Web;
+using System.Web.Script.Serialization;
+using System.Web.Services;
 using System.Web.UI.WebControls;
 
 namespace ElNetflis.frontEnds
@@ -12,9 +14,11 @@ namespace ElNetflis.frontEnds
         private String ArchivoPeliculas = HttpRuntime.AppDomainAppPath + "peliculas.txt";
         private String ArchivoUsuario = HttpRuntime.AppDomainAppPath + "usuario.txt";
 
-        private ListaDoble PeliculasDrama;
-        private ListaDoble PeliculasAccion;
-        private ListaDoble PeliculasNinos;
+        private static ListaDoble PeliculasDrama;
+        private static ListaDoble PeliculasAccion;
+        private static ListaDoble PeliculasNinos;
+
+        private static Pelicula peliculaActiva;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -65,15 +69,37 @@ namespace ElNetflis.frontEnds
             return indicators;
         }
 
-        protected void Link_Click(object sender, CommandEventArgs e)
-        {
-            String s = e.CommandArgument.ToString();
-            Console.WriteLine(s);
-        }
-
         protected void Continuar_Click(object sender, EventArgs e)
         {
 
+        }
+
+        [WebMethod]
+        public static Pelicula GetPeliculaById(int TempId, String Genero)
+        {
+            ListaDoble tmp = null;
+            switch (Genero)
+            {
+                case "AccAventura":
+                    tmp = PeliculasAccion;
+                    break;
+                case "Drama":
+                    tmp = PeliculasDrama;
+                    break;
+                case "Children":
+                    tmp = PeliculasNinos;
+                    break;
+                default:
+                    return null;
+            }
+            peliculaActiva = (Pelicula)tmp.GetByTmpId(TempId);
+            return peliculaActiva;
+        }
+
+        [WebMethod]
+        public static Pelicula VerPelicula(int TempId, String Genero)
+        {
+            
         }
     }
 }

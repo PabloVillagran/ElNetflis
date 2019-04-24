@@ -46,7 +46,7 @@ namespace ElNetflis.Clases
         public string ToCarouselItem()
         {
             return "<div class=\"col-md-3\">" +
-                "<a href=\"javascript:__doPostBack('ctl04','')\" class=\"thumbnail\">" +
+                "<a href=\"#\" onclick=\"getPelicula("+TmpId+", '"+Genero+"');\" class=\"thumbnail\">" +
                         "<img src=\""+PosterUrl+"\" alt=\""+Nombre+"\" title=\""+Nombre+"\" " +
                         "style=\"max-height: 222px;max-width: 150px;\"/></a></div>";
         }

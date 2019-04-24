@@ -152,6 +152,7 @@ namespace Estructuras.ListaDoble
                     if (tmpId == ((CarouselObject)tmp.Dato).TmpId)
                         return tmp.Dato;
                 }
+                tmp = tmp.Siguiente;
             }
             return null;
         }
