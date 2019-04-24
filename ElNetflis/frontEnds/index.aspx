@@ -35,14 +35,14 @@
             bottom: -10px;
             margin-right: -19px;
         }
-            /* The colour of the indicators */
-            .carousel-indicators li {
-                background: #cecece;
-            }
+        /* The colour of the indicators */
+        .carousel-indicators li {
+            background: #cecece;
+        }
 
-            .carousel-indicators .active {
-                background: #428bca;
-            }
+        .carousel-indicators .active {
+            background: #428bca;
+        }
 
         .center {
             margin-top: 50px;
@@ -80,20 +80,35 @@
                 dataType: "json",
                 success: function (response) {
                     peliculaActiva = response.d;
-                    $("#modalTitulo").text(peliculaActiva.Nombre);
-                    $("#modalNombre").text(peliculaActiva.Nombre);
-                    $("#modalDescripcion").text(response.d.Descripcion);
-                    $("#modalImg").attr("src", response.d.PosterUrl);
-                    $("#modalVerPelicula").attr("onclick", "reemplazarBotonesModal()");
-                    $("#modalVerPelicula").show();
-                    $("#modalContinuarLuego").hide();
-                    $("#modalFinalizar").hide();
-                    $("#detallesPelicula").modal("toggle");
+                    fillAndShowModal(peliculaActiva.Nombre, peliculaActiva.Descripcion, peliculaActiva.PosterUrl);
                 },
                 failure: function (jqXHR, textStatus, errorThrown) {
                     alert("HTTP Status: " + jqXHR.status + "; Error Text: " + jqXHR.responseText);
                 }
             });
+        }
+
+        function fillModal(nombre, descripcion, poster){
+            $("#modalTitulo").text(nombre);
+            $("#modalNombre").text(nombre);
+            $("#modalDescripcion").text(descripcion);
+            $("#modalImg").attr("src", poster);
+            $("#modalVerPelicula").attr("onclick", "reemplazarBotonesModal()");
+        }
+
+        function showContinuarModal() {
+            $("#modalVerPelicula").hide();
+            $("#modalContinuarLuego").hide();
+            $("#modalFinalizar").show();
+            $("#detallesPelicula").modal("toggle");
+        }
+
+        function fillAndShowModal(nombre, descripcion, poster) {
+            fillModal(nombre, descripcion, poster);
+            $("#modalVerPelicula").show();
+            $("#modalContinuarLuego").hide();
+            $("#modalFinalizar").hide();
+            $("#detallesPelicula").modal("toggle");
         }
 
         function reemplazarBotonesModal() {
@@ -111,11 +126,18 @@
                 dataType: "json",
                 success: function (response) {
                     alert(response.d.Mensaje);
+                    $("#thumbContinuar").attr("src", response.d.Cima.PosterUrl);
+                    $("#linkContinuar").attr("onclick", "fillModal('" + response.d.Cima.Nombre + "','" + response.d.Cima.Descripcion + "','" + response.d.Cima.PosterUrl + "');showContinuarModal();");
+                    $("#buttonContinuar").attr("onclick", "fillModal('" + response.d.Cima.Nombre + "','" + response.d.Cima.Descripcion + "','" + response.d.Cima.PosterUrl + "');showContinuarModal();");
                 },
                 failure: function (jqXHR, textStatus, errorThrown) {
                     alert("HTTP Status: " + jqXHR.status + "; Error Text: " + jqXHR.responseText);
                 }
             });
+        }
+
+        function pilaVacia(){
+            alert("No existen peliculas para reproducir.");
         }
 
         //deprecated!!
@@ -171,14 +193,22 @@
         <div class="row">
             <div class="col-sm-6">
                 <h4>Continuar viendo</h4>
-                <div class="col-md-3"><a href="#" class="thumbnail">
-                    <img src="http://lorempixel.com/150/222/" alt="Image" style="max-width: 100%;"/></a></div>
-                <asp:Button ID="Continuar" runat="server" Text="Continuar" CssClass="btn btn-primary" OnClick="Continuar_Click" />
+                    <asp:Literal ID="continuarItem" runat="server"/>
+                    <!--
+                <div class="col-md-3">
+                    <a href="#" class="thumbnail" onclick="pilaVacia()">
+                        <img id="thumbContinuar" src="http://lorempixel.com/150/222/" alt="Image" style="max-width: 100%;"/>
+                    </a>
+                    <button id="Continuar" class="btn btn-primary" onclick="javascript:pilaVacia();">Continuar</button>
+                </div>
+                    -->
             </div>
             <div class="col-sm-6">
                 <h4>Mi Lista</h4>
                 <div class="col-md-3"><a href="#" class="thumbnail">
-                    <img src="http://lorempixel.com/150/222/" alt="Image" style="max-width: 100%;"/></a></div>
+                    <img id="thumbCola" src="#" alt="Image" style="height: 222px;width: 150px;"/></a>
+                </div>
+                <button id="verDeCola" class="btn btn-primary" onclick="javascript:pilaVacia();">Ver película en cola</button>
             </div>
         </div>
         <div class="row">

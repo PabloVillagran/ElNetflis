@@ -30,9 +30,30 @@ namespace ElNetflis.frontEnds
             PeliculasAccion = Utils.CargarPeliculas(ArchivoPeliculas, "AccAventura");
             PeliculasNinos = Utils.CargarPeliculas(ArchivoPeliculas, "Children");
             //Mi Lista tipo Cola
-            MiListaPersonal = new Cola();
+            MiListaPersonal = (Cola)HttpContext.Current.Session["ListaPersonal"];
+            if (MiListaPersonal == null)
+            {
+                
+            }
             //Continuar Viendo tipo pila
-            ContinuarViendo = new Pila();
+            ContinuarViendo = (Pila)HttpContext.Current.Session["ContiuarViendo"];
+            if(ContinuarViendo == null)
+            {
+                ContinuarViendo = new Pila();
+                HttpContext.Current.Session["ContinuarViendo"] = ContinuarViendo;
+
+                continuarItem.Text = "<div class=\"col-md-6\"><a id=\"linkContinuar\" href=\"#\" class=\"thumbnail\" onclick=\"pilaVacia()\">" +
+                    "<img id=\"thumbContinuar\" src=\"#\" alt=\"Image\" style=\"height: 222px; width: 150px;\"/>" +
+                    "</a></div><button type=\"button\" id=\"buttonContinuar\" class=\"btn btn-primary col-md-6\" onclick=\"javascript:pilaVacia();\">Continuar</button>";
+            }
+            else
+            {
+                Pelicula tmp = ((Pelicula)ContinuarViendo.Peek());
+                continuarItem.Text = "<div class=\"col-md-6\">" +
+                    tmp.ToThumbNail("Continuar")
+                    + "</div>"
+                    + "<button type=\"button\" id=\"Continuar\" class=\"btn btn-primary col-md-6\" onclick=\"fillAndShowModal('" + tmp.Nombre + "','" + tmp.Descripcion + "','" + tmp.PosterUrl + "')\">Continuar</button>";
+            }
 
             LlenarContenido();
         }
@@ -79,7 +100,7 @@ namespace ElNetflis.frontEnds
 
         }
 
-        [WebMethod]
+        [WebMethod(EnableSession =true)]
         public static Pelicula GetPeliculaById(int TempId, String Genero)
         {
             ListaDoble tmp = null;
@@ -101,14 +122,16 @@ namespace ElNetflis.frontEnds
             return peliculaActiva;
         }
 
-        [WebMethod]
+        [WebMethod(EnableSession = true)]
         public static RetornoContinuarLuego ContinuarLuego()
         {
+            ContinuarViendo = (Pila)HttpContext.Current.Session["ContinuarViendo"];
             ContinuarViendo.Push(peliculaActiva);
             RetornoContinuarLuego retorno = new RetornoContinuarLuego();
             retorno.Cima = (Pelicula)ContinuarViendo.Peek();
             retorno.Mensaje = "Se ha añadido la película " + retorno.Cima.Nombre + " a la pila de reproducción.";
             peliculaActiva = null;
+            HttpContext.Current.Session["ContinuarViendo"] = ContinuarViendo;
             return retorno;
         }
     }

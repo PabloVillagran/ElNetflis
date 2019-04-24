@@ -18,10 +18,10 @@ namespace ElNetflis.Clases
             Pelicula tmp = new Pelicula();
             String[] datos = line.Split('|');
             tmp.Genero = datos[0].Replace("Genero:", "");
-            tmp.Nombre = datos[1].Replace("Nombre:", "");
-            tmp.Director = datos[2].Replace("Director:", "");
+            tmp.Nombre = datos[1].Replace("Nombre:", "").Replace("'", "");
+            tmp.Director = datos[2].Replace("Director:", "").Replace("'", "");
             tmp.Year = Int32.Parse(datos[3].Replace("Year:",""));
-            tmp.Descripcion = datos[4].Replace("Descripcion:","");
+            tmp.Descripcion = datos[4].Replace("Descripcion:","").Replace("'","");
             tmp.PosterUrl = datos[5].Replace("PosterUrl:","");
             return tmp;
         }
@@ -48,7 +48,15 @@ namespace ElNetflis.Clases
             return "<div class=\"col-md-3\">" +
                 "<a href=\"#\" onclick=\"getPelicula("+TmpId+", '"+Genero+"');\" class=\"thumbnail\">" +
                         "<img src=\""+PosterUrl+"\" alt=\""+Nombre+"\" title=\""+Nombre+"\" " +
-                        "style=\"max-height: 222px;max-width: 150px;\"/></a></div>";
+                        "style=\"height: 222px; width: 150px;\"/></a></div>";
+        }
+
+        internal string ToThumbNail(String parent)
+        {
+            return "" +
+                "<a href=\"#\" id=\"link"+parent+ "\" class=\"thumbnail\" onclick=\"fillAndShowModal('"+Nombre+"','"+Descripcion+"','"+PosterUrl+"')\">" +
+                        "<img id=\"thumb"+parent+"\" src=\"" + PosterUrl + "\" alt=\"" + Nombre + "\" title=\"" + Nombre + "\" " +
+                        "style=\"height: 222px; width: 150px;\"/></a>";
         }
     }
 }
