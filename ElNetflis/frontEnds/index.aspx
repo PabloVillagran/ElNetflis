@@ -69,6 +69,8 @@
             }
     </style>
     <script type="text/javascript">
+        var peliculaActiva;
+
         function getPelicula(tempId, genero) {
             $.ajax({
                 type: "POST",
@@ -77,11 +79,15 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
-                    $("#modalTitulo").text(response.d.Nombre);
-                    $("#modalNombre").text(response.d.Nombre);
+                    peliculaActiva = response.d;
+                    $("#modalTitulo").text(peliculaActiva.Nombre);
+                    $("#modalNombre").text(peliculaActiva.Nombre);
                     $("#modalDescripcion").text(response.d.Descripcion);
                     $("#modalImg").attr("src", response.d.PosterUrl);
-                    $("#modalVerPelicula").attr("onclick", "verPelicula(" + tempId + ", '"+genero+"')");
+                    $("#modalVerPelicula").attr("onclick", "reemplazarBotonesModal()");
+                    $("#modalVerPelicula").show();
+                    $("#modalContinuarLuego").hide();
+                    $("#modalFinalizar").hide();
                     $("#detallesPelicula").modal("toggle");
                 },
                 failure: function (jqXHR, textStatus, errorThrown) {
@@ -90,6 +96,29 @@
             });
         }
 
+        function reemplazarBotonesModal() {
+            $("#modalVerPelicula").hide();
+            $("#modalContinuarLuego").show();
+            $("#modalFinalizar").show();
+        }
+
+        function continuarLuego() {
+            $.ajax({
+                type: "POST",
+                url: "index.aspx/ContinuarLuego",
+                data: {},
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    alert(response.d.Mensaje);
+                },
+                failure: function (jqXHR, textStatus, errorThrown) {
+                    alert("HTTP Status: " + jqXHR.status + "; Error Text: " + jqXHR.responseText);
+                }
+            });
+        }
+
+        //deprecated!!
         function verPelicula(tempId, genero) {
             $.ajax({
                 type: "POST",
@@ -116,27 +145,28 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">cerrar</button>
                         <h4 class="modal-title" id="modalTitulo"></h4>
                         </div>
                     <div class="modal-body">
-                        <center>
+                        <div style="text-align:center;">
                             <img id="modalImg" src="#"/>
                             <h3 class="media-heading" id="modalNombre"></h3>
-                        </center>
+                        </div>
                         
                         <h5>Descripción: </h5>
                         <p id="modalDescripcion"></p>
                     </div>
                     <div class="modal-footer">
-                        <center>
-                        <button id="modalVerPelicula" type="button" class="btn btn-default" data-dismiss="modal">Ver película</button>
-                        </center>
+                        <div style="text-align:center;">
+                            <button id="modalVerPelicula" type="button" class="btn btn-default">Ver película</button>
+                            <button id="modalContinuarLuego" type="button" class="btn btn-default" data-dismiss="modal" onclick="continuarLuego();">Continuar luego.</button>
+                            <button id="modalFinalizar" type="button" class="btn btn-default" data-dismiss="modal">Finalizar Película</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
 
         <div class="row">
             <div class="col-sm-6">

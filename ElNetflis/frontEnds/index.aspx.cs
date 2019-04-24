@@ -1,6 +1,7 @@
 ﻿using ElNetflis.Clases;
-
+using Estructuras.Cola;
 using Estructuras.ListaDoble;
+using Estructuras.Pila;
 using System;
 using System.Web;
 using System.Web.Script.Serialization;
@@ -20,14 +21,18 @@ namespace ElNetflis.frontEnds
 
         private static Pelicula peliculaActiva;
 
+        private static Pila ContinuarViendo;
+        private static Cola MiListaPersonal;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             PeliculasDrama = Utils.CargarPeliculas(ArchivoPeliculas, "Drama");
             PeliculasAccion = Utils.CargarPeliculas(ArchivoPeliculas, "AccAventura");
             PeliculasNinos = Utils.CargarPeliculas(ArchivoPeliculas, "Children");
             //Mi Lista tipo Cola
-
+            MiListaPersonal = new Cola();
             //Continuar Viendo tipo pila
+            ContinuarViendo = new Pila();
 
             LlenarContenido();
         }
@@ -61,9 +66,9 @@ namespace ElNetflis.frontEnds
                     return null;
             }
             int indicatorsQuantity = (int)Math.Ceiling((double)tmp.Size / 4);
-            for(int i = 0; i < indicatorsQuantity; i++)
+            for (int i = 0; i < indicatorsQuantity; i++)
             {
-                indicators += "<li data-target=\"#carAccion\" data-slide-to=\""+i+"\" "+(i==0?"class=\"active\"":"")+"></li>";
+                indicators += "<li data-target=\"#carAccion\" data-slide-to=\"" + i + "\" " + (i == 0 ? "class=\"active\"" : "") + "></li>";
             }
             indicators += "</ol>";
             return indicators;
@@ -97,9 +102,14 @@ namespace ElNetflis.frontEnds
         }
 
         [WebMethod]
-        public static Pelicula VerPelicula(int TempId, String Genero)
+        public static RetornoContinuarLuego ContinuarLuego()
         {
-            
+            ContinuarViendo.Push(peliculaActiva);
+            RetornoContinuarLuego retorno = new RetornoContinuarLuego();
+            retorno.Cima = (Pelicula)ContinuarViendo.Peek();
+            retorno.Mensaje = "Se ha añadido la película " + retorno.Cima.Nombre + " a la pila de reproducción.";
+            peliculaActiva = null;
+            return retorno;
         }
     }
 }
