@@ -13,7 +13,6 @@ namespace ElNetflis.frontEnds
     public partial class index : System.Web.UI.Page
     {
         private String ArchivoPeliculas = HttpRuntime.AppDomainAppPath + "peliculas.txt";
-        private String ArchivoUsuario = HttpRuntime.AppDomainAppPath + "usuario.txt";
 
         private static ListaDoble PeliculasDrama;
         private static ListaDoble PeliculasAccion;
@@ -30,11 +29,24 @@ namespace ElNetflis.frontEnds
             PeliculasAccion = Utils.CargarPeliculas(ArchivoPeliculas, "AccAventura");
             PeliculasNinos = Utils.CargarPeliculas(ArchivoPeliculas, "Children");
             //Mi Lista tipo Cola
-            MiListaPersonal = (Cola)HttpContext.Current.Session["ListaPersonal"];
-            if (MiListaPersonal == null)
+            //MiListaPersonal = (Cola)HttpContext.Current.Session["ListaPersonal"];
+            //if (MiListaPersonal == null)
             {
-                
+                MiListaPersonal = new Cola();
+                HttpContext.Current.Session["ListaPersonal"] = MiListaPersonal;
+
+                miListaItem.Text = "<div class=\"col-md-6\"><a id=\"linkLista\" href=\"#\" class=\"thumbnail\" onclick=\"pilaVacia()\">" +
+                    "<img id=\"thumbLista\" src=\"#\" style=\"height: 222px; width: 150px;\"/>" +
+                    "</a></div><button type=\"button\" id=\"buttonLista\" class=\"btn btn-primary col-md-6\" onclick=\"javascript:pilaVacia();\">Ver película en cola</button>";
             }
+            //else
+            //{
+            //Pelicula tmp = ((Pelicula)MiListaPersonal.VerInicio());
+            //    miListaItem.Text = "<div class=\"col-md-6\">" +
+            //        tmp.ToThumbNail("Continuar")
+            //        + "</div>"
+            //        + "<button type=\"button\" id=\"Continuar\" class=\"btn btn-primary col-md-6\" onclick=\"fillAndShowModal('" + tmp.Nombre + "','" + tmp.Descripcion + "','" + tmp.PosterUrl + "')\">Continuar</button>";
+            // }
             //Continuar Viendo tipo pila
             ContinuarViendo = (Pila)HttpContext.Current.Session["ContiuarViendo"];
             if(ContinuarViendo == null)
@@ -43,7 +55,7 @@ namespace ElNetflis.frontEnds
                 HttpContext.Current.Session["ContinuarViendo"] = ContinuarViendo;
 
                 continuarItem.Text = "<div class=\"col-md-6\"><a id=\"linkContinuar\" href=\"#\" class=\"thumbnail\" onclick=\"pilaVacia()\">" +
-                    "<img id=\"thumbContinuar\" src=\"#\" alt=\"Image\" style=\"height: 222px; width: 150px;\"/>" +
+                    "<img id=\"thumbContinuar\" src=\"#\" style=\"height: 222px; width: 150px;\"/>" +
                     "</a></div><button type=\"button\" id=\"buttonContinuar\" class=\"btn btn-primary col-md-6\" onclick=\"javascript:pilaVacia();\">Continuar</button>";
             }
             else
@@ -95,11 +107,6 @@ namespace ElNetflis.frontEnds
             return indicators;
         }
 
-        protected void Continuar_Click(object sender, EventArgs e)
-        {
-
-        }
-
         [WebMethod(EnableSession =true)]
         public static Pelicula GetPeliculaById(int TempId, String Genero)
         {
@@ -132,6 +139,54 @@ namespace ElNetflis.frontEnds
             retorno.Mensaje = "Se ha añadido la película " + retorno.Cima.Nombre + " a la pila de reproducción.";
             peliculaActiva = null;
             HttpContext.Current.Session["ContinuarViendo"] = ContinuarViendo;
+            return retorno;
+        }
+
+        [WebMethod]
+        public static RetornoContinuarLuego PopContinuar()
+        {
+            RetornoContinuarLuego retorno = new RetornoContinuarLuego();
+            Pelicula anterior = (Pelicula)ContinuarViendo.Pop();
+            Pelicula siguiente = (Pelicula)ContinuarViendo.Peek();
+            if (siguiente != null)
+            {
+                retorno.Mensaje = ("Se ha finalizado de ver la pelicula "+anterior.Nombre+", la siguiente en la lista es "+siguiente.Nombre+".");
+                retorno.Cima = siguiente;
+            }
+            else
+            {
+                retorno.Mensaje = "Has terminado de ver todas las películas que tenias pendientes.";
+            }
+            return retorno;
+        }
+
+        [WebMethod]
+        public static RetornoContinuarLuego AgregarLista()
+        {
+            RetornoContinuarLuego retorno = new RetornoContinuarLuego();
+            MiListaPersonal.Agregar(peliculaActiva);
+            retorno.Cima = (Pelicula)MiListaPersonal.VerInicio();
+            retorno.Mensaje = "Se ha añadido la película " + peliculaActiva.Nombre + " a tu cola de reproducción.";
+            peliculaActiva = null;
+            HttpContext.Current.Session["ListaPersonal"] = MiListaPersonal;
+            return retorno;
+        }
+
+        [WebMethod]
+        public static RetornoContinuarLuego SacarCola()
+        {
+            RetornoContinuarLuego retorno = new RetornoContinuarLuego();
+            Pelicula anterior = (Pelicula)MiListaPersonal.Quitar();
+            Pelicula siguiente = (Pelicula)MiListaPersonal.VerInicio();
+            if (siguiente != null)
+            {
+                retorno.Mensaje = ("Se ha finalizado de ver la pelicula " + anterior.Nombre + ", la siguiente en la cola es " + siguiente.Nombre + ".");
+                retorno.Cima = siguiente;
+            }
+            else
+            {
+                retorno.Mensaje = "Has terminado de ver todas las películas que tenias en tu lista personal.";
+            }
             return retorno;
         }
     }

@@ -31,6 +31,15 @@ namespace ElNetflis.frontEnds {
         protected global::System.Web.UI.WebControls.Literal continuarItem;
         
         /// <summary>
+        /// miListaItem control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal miListaItem;
+        
+        /// <summary>
         /// carAccionIndicators control.
         /// </summary>
         /// <remarks>

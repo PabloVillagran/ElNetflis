@@ -47,6 +47,14 @@ namespace Estructuras.Cola
                 return null;
         }
 
+        public object VerFin()
+        {
+            if (Fin != null)
+                return Fin.Dato;
+            else
+                return null;
+        }
+
         public bool ColaVacia()
         {
             return Inicio == null;

@@ -23,16 +23,20 @@ namespace Estructuras.Pila
         public object Pop()
         {
             Nodo tmp = Cima;
-            Cima = Cima.Siguiente;
-            tmp.Siguiente = null;
-            object dato = tmp.Dato;
-            tmp = null;
-            return dato;
+            if (tmp != null)
+            {
+                Cima = Cima.Siguiente;
+                tmp.Siguiente = null;
+                object dato = tmp.Dato;
+                tmp = null;
+                return dato;
+            }
+            else return null;
         }
 
         public object Peek()
         {
-            return Cima.Dato;
+            return (Cima != null) ? Cima.Dato: null ;
         }
     }
 

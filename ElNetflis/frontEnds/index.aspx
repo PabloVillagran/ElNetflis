@@ -98,14 +98,17 @@
 
         function showContinuarModal() {
             $("#modalVerPelicula").hide();
+            $("#modalAgregarALista").hide();
             $("#modalContinuarLuego").hide();
             $("#modalFinalizar").show();
+            $("#modalFinalizar").attr("onclick", "popContinuar();");
             $("#detallesPelicula").modal("toggle");
         }
 
         function fillAndShowModal(nombre, descripcion, poster) {
             fillModal(nombre, descripcion, poster);
             $("#modalVerPelicula").show();
+            $("#modalAgregarALista").show();
             $("#modalContinuarLuego").hide();
             $("#modalFinalizar").hide();
             $("#detallesPelicula").modal("toggle");
@@ -113,6 +116,7 @@
 
         function reemplazarBotonesModal() {
             $("#modalVerPelicula").hide();
+            $("#modalAgregarALista").hide();
             $("#modalContinuarLuego").show();
             $("#modalFinalizar").show();
         }
@@ -129,11 +133,96 @@
                     $("#thumbContinuar").attr("src", response.d.Cima.PosterUrl);
                     $("#linkContinuar").attr("onclick", "fillModal('" + response.d.Cima.Nombre + "','" + response.d.Cima.Descripcion + "','" + response.d.Cima.PosterUrl + "');showContinuarModal();");
                     $("#buttonContinuar").attr("onclick", "fillModal('" + response.d.Cima.Nombre + "','" + response.d.Cima.Descripcion + "','" + response.d.Cima.PosterUrl + "');showContinuarModal();");
+                    $("#modalFinalizar").attr("onclick", "popContinuar();");
                 },
                 failure: function (jqXHR, textStatus, errorThrown) {
                     alert("HTTP Status: " + jqXHR.status + "; Error Text: " + jqXHR.responseText);
                 }
             });
+        }
+
+        function popContinuar() {
+            $.ajax({
+                type: "POST",
+                url: "index.aspx/PopContinuar",
+                data: {},
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    alert(response.d.Mensaje);
+                    if (response.d.Cima == null) {
+                        $("#linkContinuar").attr("onclick", "alert('Te recomendamos ver una película nueva');");
+                        $("#buttonContinuar").attr("onclick", "alert('Te recomendamos ver una película nueva');");
+                        $("#modalFinalizar").attr("onclick", "");
+                        $("#linkContinuar").attr("onclick", "pilaVacia();");
+                        $("#thumbContinuar").attr("src", "#");
+                        $("#buttonContinuar").attr("onclick", "pilaVacia();");
+                    } else {
+                        $("#thumbContinuar").attr("src", response.d.Cima.PosterUrl);
+                        $("#linkContinuar").attr("onclick", "fillModal('" + response.d.Cima.Nombre + "','" + response.d.Cima.Descripcion + "','" + response.d.Cima.PosterUrl + "');showContinuarModal();");
+                        $("#buttonContinuar").attr("onclick", "fillModal('" + response.d.Cima.Nombre + "','" + response.d.Cima.Descripcion + "','" + response.d.Cima.PosterUrl + "');showContinuarModal();");
+                    }
+                },
+                failure: function (jqXHR, textStatus, errorThrown) {
+                    alert("HTTP Status: " + jqXHR.status + "; Error Text: " + jqXHR.responseText);
+                }
+            });
+        }
+
+        function agregarACola() {
+            $.ajax({
+                type: "POST",
+                url: "index.aspx/AgregarLista",
+                data: {},
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    alert(response.d.Mensaje);
+                    $("#thumbLista").attr("src", response.d.Cima.PosterUrl);
+                    $("#linkLista").attr("onclick", "fillModal('" + response.d.Cima.Nombre + "','" + response.d.Cima.Descripcion + "','" + response.d.Cima.PosterUrl + "');showListaModal();");
+                    $("#buttonLista").attr("onclick", "fillModal('" + response.d.Cima.Nombre + "','" + response.d.Cima.Descripcion + "','" + response.d.Cima.PosterUrl + "');showListaModal();");
+                },
+                failure: function (jqXHR, textStatus, errorThrown) {
+                    alert("HTTP Status: " + jqXHR.status + "; Error Text: " + jqXHR.responseText);
+                }
+            });
+        }
+
+        function sacarDeCola() {
+            $.ajax({
+                type: "POST",
+                url: "index.aspx/SacarCola",
+                data: {},
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    alert(response.d.Mensaje);
+                    if (response.d.Cima == null) {
+                        $("#linkLista").attr("onclick", "alert('Te recomendamos agregar más películas.');");
+                        $("#buttonLista").attr("onclick", "alert('Te recomendamos agregar más películas.');");
+                        $("#modalFinalizar").attr("onclick", "");
+                        $("#linkLista").attr("onclick", "pilaVacia();");
+                        $("#thumbLista").attr("src", "#");
+                        $("#buttonLista").attr("onclick", "pilaVacia();");
+                    } else {
+                        $("#thumbLista").attr("src", response.d.Cima.PosterUrl);
+                        $("#linkLista").attr("onclick", "fillModal('" + response.d.Cima.Nombre + "','" + response.d.Cima.Descripcion + "','" + response.d.Cima.PosterUrl + "');showListaModal();");
+                        $("#buttonLista").attr("onclick", "fillModal('" + response.d.Cima.Nombre + "','" + response.d.Cima.Descripcion + "','" + response.d.Cima.PosterUrl + "');showListaModal();");
+                    }
+                },
+                failure: function (jqXHR, textStatus, errorThrown) {
+                    alert("HTTP Status: " + jqXHR.status + "; Error Text: " + jqXHR.responseText);
+                }
+            });
+        }
+
+        function showListaModal() {
+            $("#modalVerPelicula").show();
+            $("#modalAgregarALista").hide();
+            $("#modalContinuarLuego").hide();
+            $("#modalFinalizar").hide();
+            $("#modalFinalizar").attr("onclick", "sacarDeCola();");
+            $("#detallesPelicula").modal("toggle");
         }
 
         function pilaVacia(){
@@ -160,8 +249,22 @@
 </head>
 <body>
     <form runat="server" class="container">
-    <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="True">
-    </asp:ScriptManager>
+        <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="True">
+        </asp:ScriptManager>
+
+        <nav class="row">
+            <img src="/Img/logo.png" class="col-md-4"/>
+            <div id="custom-search-input" class="col-md-8">
+                <div class="input-group">
+                    <input type="text" class="  search-query form-control" placeholder="Search" />
+                    <span class="input-group-btn">
+                        <button class="btn btn-danger" type="button">
+                            <span class=" glyphicon glyphicon-search"></span>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </nav>
 
          <div class="modal fade" id="detallesPelicula" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -182,6 +285,7 @@
                     <div class="modal-footer">
                         <div style="text-align:center;">
                             <button id="modalVerPelicula" type="button" class="btn btn-default">Ver película</button>
+                            <button id="modalAgregarALista" type="button" class="btn btn-default" data-dismiss="modal" onclick="agregarACola();">Agregar a Mi Lista</button>
                             <button id="modalContinuarLuego" type="button" class="btn btn-default" data-dismiss="modal" onclick="continuarLuego();">Continuar luego.</button>
                             <button id="modalFinalizar" type="button" class="btn btn-default" data-dismiss="modal">Finalizar Película</button>
                         </div>
@@ -193,22 +297,11 @@
         <div class="row">
             <div class="col-sm-6">
                 <h4>Continuar viendo</h4>
-                    <asp:Literal ID="continuarItem" runat="server"/>
-                    <!--
-                <div class="col-md-3">
-                    <a href="#" class="thumbnail" onclick="pilaVacia()">
-                        <img id="thumbContinuar" src="http://lorempixel.com/150/222/" alt="Image" style="max-width: 100%;"/>
-                    </a>
-                    <button id="Continuar" class="btn btn-primary" onclick="javascript:pilaVacia();">Continuar</button>
-                </div>
-                    -->
+                <asp:Literal ID="continuarItem" runat="server"/>
             </div>
             <div class="col-sm-6">
                 <h4>Mi Lista</h4>
-                <div class="col-md-3"><a href="#" class="thumbnail">
-                    <img id="thumbCola" src="#" alt="Image" style="height: 222px;width: 150px;"/></a>
-                </div>
-                <button id="verDeCola" class="btn btn-primary" onclick="javascript:pilaVacia();">Ver película en cola</button>
+                <asp:Literal ID="miListaItem" runat="server" />
             </div>
         </div>
         <div class="row">
