@@ -203,14 +203,9 @@ namespace ElNetflis.frontEnds
         [WebMethod]
         public static ListaDoble Buscar(String buscado)
         {
-            if (Buscadas != null)
-                Buscadas = new ListaDoble();
-            foreach(object pelicula in Todas)
-            {
-                if (((Pelicula)pelicula).Nombre.Contains(buscado))
-                    Buscadas.insertarRaiz(pelicula);
-            }
-            return Buscadas;
+            buscado = buscado.ToLower();
+            Todas.LimiteBusqueda = 3;
+            return Todas.BuscarSimilares(buscado);
         }
     }
 }

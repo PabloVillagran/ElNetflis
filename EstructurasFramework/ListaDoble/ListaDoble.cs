@@ -173,10 +173,33 @@ namespace Estructuras.ListaDoble
             return null;
         }
 
-        public ListaDoble BuscarSimilares(object dato)
+        public ListaDoble BuscarSimilares(string dato)
         {
             ListaDoble resultados = new ListaDoble();
+            Nodo tmp = Raiz;
+            int contador = 0;
+            while (tmp != null)
+            {
+                if(tmp.Dato is CarouselObject)
+                {
+                    if (((CarouselObject)tmp.Dato).Nombre.ToLower().Contains(dato))
+                    {
+                        resultados.insertarRaiz(tmp.Dato);
+                        contador++;
+                    }
+                }
+                else
+                {
+                    throw new NotImplementedException("Se esperaba un objeto de tipo CarouselObject.");
+                }
 
+                //Iterador
+                if (contador < LimiteBusqueda)
+                    tmp = tmp.Siguiente;
+                else
+                    tmp = null;
+                
+            }
             return resultados;
         }
     }

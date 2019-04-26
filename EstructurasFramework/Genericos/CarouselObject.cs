@@ -10,5 +10,6 @@ namespace Estructuras.Generico
     {
         string ToCarouselItem();
         int TmpId { get; set; }
+        string Nombre { get; set; }
     }
 }
