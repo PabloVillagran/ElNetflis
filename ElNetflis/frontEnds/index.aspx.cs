@@ -18,6 +18,9 @@ namespace ElNetflis.frontEnds
         private static ListaDoble PeliculasAccion;
         private static ListaDoble PeliculasNinos;
 
+        private static ListaDoble Todas;
+        private static ListaDoble Buscadas;
+
         private static Pelicula peliculaActiva;
 
         private static Pila ContinuarViendo;
@@ -28,6 +31,13 @@ namespace ElNetflis.frontEnds
             PeliculasDrama = Utils.CargarPeliculas(ArchivoPeliculas, "Drama");
             PeliculasAccion = Utils.CargarPeliculas(ArchivoPeliculas, "AccAventura");
             PeliculasNinos = Utils.CargarPeliculas(ArchivoPeliculas, "Children");
+
+            Todas = new ListaDoble();
+            Todas.AgregarLista(PeliculasDrama);
+            Todas.AgregarLista(PeliculasAccion);
+            Todas.AgregarLista(PeliculasNinos);
+
+            Buscadas = new ListaDoble();
             //Mi Lista tipo Cola
             //MiListaPersonal = (Cola)HttpContext.Current.Session["ListaPersonal"];
             //if (MiListaPersonal == null)
@@ -188,6 +198,19 @@ namespace ElNetflis.frontEnds
                 retorno.Mensaje = "Has terminado de ver todas las películas que tenias en tu lista personal.";
             }
             return retorno;
+        }
+
+        [WebMethod]
+        public static ListaDoble Buscar(String buscado)
+        {
+            if (Buscadas != null)
+                Buscadas = new ListaDoble();
+            foreach(object pelicula in Todas)
+            {
+                if (((Pelicula)pelicula).Nombre.Contains(buscado))
+                    Buscadas.insertarRaiz(pelicula);
+            }
+            return Buscadas;
         }
     }
 }

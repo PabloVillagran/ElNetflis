@@ -205,6 +205,7 @@
     <Compile Include="frontEnds\index.aspx.designer.cs">
       <DependentUpon>index.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Clases\RetornoListaBusqueda.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

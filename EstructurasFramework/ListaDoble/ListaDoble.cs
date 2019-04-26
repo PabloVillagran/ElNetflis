@@ -8,8 +8,12 @@ namespace Estructuras.ListaDoble
     public class ListaDoble : IEnumerator, IEnumerable
     {
         public Nodo Raiz { get; private set; }
+        public Nodo Ultimo { get; private set; }
+
         private Nodo enumerador = new Nodo(null);
         public int Size { get; set;}
+
+        public int LimiteBusqueda { get; set; }
 
         public ListaDoble()
         {
@@ -39,16 +43,28 @@ namespace Estructuras.ListaDoble
             if (Raiz != null)
                 Raiz.Anterior = tmp;
             Raiz = tmp;
+            if (Ultimo == null)
+                Ultimo = Raiz;
             if(enumerador!=null)
                 enumerador.Siguiente = Raiz;
             Size++;
         }
 
-        public void insertarUltimo(object dato)
+        public void AgregarLista(ListaDoble lista)
         {
-            //TODO
+            if (Raiz == null)
+            {
+                Raiz = lista.Raiz;
+                Ultimo = lista.Ultimo;
+            }
+            else
+            {
+                lista.Raiz.Anterior = Ultimo;
+                Ultimo.Siguiente = lista.Raiz;
+                Ultimo = lista.Ultimo;
+            }
         }
-        
+
         public void eliminar(object dato)
         {
             Nodo tmp = Raiz;
@@ -155,6 +171,13 @@ namespace Estructuras.ListaDoble
                 tmp = tmp.Siguiente;
             }
             return null;
+        }
+
+        public ListaDoble BuscarSimilares(object dato)
+        {
+            ListaDoble resultados = new ListaDoble();
+
+            return resultados;
         }
     }
 
