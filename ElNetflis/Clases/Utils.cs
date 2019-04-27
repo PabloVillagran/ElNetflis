@@ -15,7 +15,7 @@ namespace ElNetflis.Clases
                 int tmpId = 0;
                 foreach(String line in lines)
                 {
-                    if (line.Contains("Genero:" + genero))
+                    if (line.Contains("Genero:" + genero) || genero.Equals("TODO"))
                         peliculas.insertarRaiz(Pelicula.Parse(line, tmpId++));
                 }
             }

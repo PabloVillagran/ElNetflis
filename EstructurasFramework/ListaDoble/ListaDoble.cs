@@ -52,17 +52,32 @@ namespace Estructuras.ListaDoble
 
         public void AgregarLista(ListaDoble lista)
         {
+            ListaDoble tmp = Clonar(lista);
+            tmp.Raiz = lista.Raiz;
+            tmp.Ultimo = lista.Ultimo;
             if (Raiz == null)
             {
-                Raiz = lista.Raiz;
-                Ultimo = lista.Ultimo;
+                Raiz = tmp.Raiz;
+                Ultimo = tmp.Ultimo;
             }
             else
             {
-                lista.Raiz.Anterior = Ultimo;
-                Ultimo.Siguiente = lista.Raiz;
-                Ultimo = lista.Ultimo;
+                tmp.Raiz.Anterior = Ultimo;
+                Ultimo.Siguiente = tmp.Raiz;
+                Ultimo = tmp.Ultimo;
             }
+        }
+
+        private ListaDoble Clonar(ListaDoble lista)
+        {
+            Nodo tmp = lista.Raiz;
+            ListaDoble resultado = new ListaDoble();
+            while (tmp != null)
+            {
+                resultado.insertarRaiz(tmp);
+                tmp = tmp.Siguiente;
+            }
+            return resultado;
         }
 
         public void eliminar(object dato)

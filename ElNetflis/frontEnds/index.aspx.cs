@@ -32,10 +32,12 @@ namespace ElNetflis.frontEnds
             PeliculasAccion = Utils.CargarPeliculas(ArchivoPeliculas, "AccAventura");
             PeliculasNinos = Utils.CargarPeliculas(ArchivoPeliculas, "Children");
 
-            Todas = new ListaDoble();
-            Todas.AgregarLista(PeliculasDrama);
-            Todas.AgregarLista(PeliculasAccion);
-            Todas.AgregarLista(PeliculasNinos);
+            Todas = Utils.CargarPeliculas(ArchivoPeliculas, "TODO");
+
+            //Todas = new ListaDoble();
+            //Todas.AgregarLista(PeliculasDrama);
+            //Todas.AgregarLista(PeliculasAccion);
+            //Todas.AgregarLista(PeliculasNinos);
 
             Buscadas = new ListaDoble();
             //Mi Lista tipo Cola
