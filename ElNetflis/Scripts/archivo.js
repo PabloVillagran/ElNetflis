@@ -176,7 +176,7 @@ function buscarajax() {
                 var spans = "";
                 if (array != null) {
                     array.forEach(function (obj) {
-                        spans += "<span onclick='getPelicula(" + obj.TempId + ",\"" + obj.Genero + "\")'>" + obj.Nombre + "</span>";
+                        spans += "<span onclick='getPelicula(" + obj.TmpId + ",\"" + obj.Genero + "\")'>" + obj.Nombre + "</span>";
                     });
                     $("#sugerencias").html(spans);
                 }

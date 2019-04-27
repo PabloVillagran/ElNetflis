@@ -13,18 +13,22 @@
     <script type="text/javascript" src="/Scripts/archivo.js"></script>
 </head>
 <body>
-    <form runat="server" class="container">
-        <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="True">
-        </asp:ScriptManager>
+    <nav class="row">
+        <div class="container">
 
-        <nav class="row">
             <img src="/Img/logo.png" class="col-md-4" />
             <div id="custom-search-input" class="col-md-8">
                 <input style="width:100%;" onkeyup="buscarajax();" type="text" class="search-query form-control" placeholder="Search" id="searchbar" />
                 <div id="sugerencias" class="autoCompleteDiv">
                 </div>
             </div>
-        </nav>
+        </div>
+    </nav>
+    <form runat="server" class="container">
+        <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="True">
+        </asp:ScriptManager>
+
+        
 
         <div class="row">
             <div class="col-sm-6">
