@@ -28,8 +28,6 @@
         <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="True">
         </asp:ScriptManager>
 
-        
-
         <div class="row">
             <div class="col-sm-6">
                 <h4>Continuar viendo</h4>
